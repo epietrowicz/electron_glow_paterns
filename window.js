@@ -196,7 +196,17 @@ function drawPrompt(label){
     console.log('uh-oh', error);
   })
 }
-
+function startShow(){
+  console.log('Show started! time: ', timeInput, 'step: ', stepInput);
+}
+var timeInput;
+var stepInput;
 $(() => {
   drawChart();
+  $('#time-input').bind('input propertychange', function() {
+    timeInput = this.value
+  })
+  $('#step-input').bind('input propertychange', function() {
+    stepInput = this.value
+  })
 })
