@@ -71,22 +71,22 @@ function drawChart() {
         },
       },
 
-      onClick: function(event, array) {
-          let element = this.getElementAtEvent(event);
-          if (element.length > 0) {
-              var label = element[0]._model.label;
-              //alert(label);
-              drawPrompt(label);
-          }
+    onClick: function(event, array) {
+        let element = this.getElementAtEvent(event);
+        if (element.length > 0) {
+            var label = element[0]._model.label;
+            drawPrompt(label);
+        }
       }
     },
   });
-
   setInterval(updateDatasets, 1000);
 }
-
+var i = 0;
 function updateDatasets(){
-
+  i++;
+  chart.data.datasets[i].backgroundColor = 'rgba(0, 255, 0, 1)'
+  chart.update();
 }
 
 function drawPrompt(label){
