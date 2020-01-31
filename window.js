@@ -1,5 +1,17 @@
 const os = require('os')
 var chart = null;
+var timeInput;
+var stepInput;
+var timeInc;
+var frames = 0;
+var countLedsInFrame = 0;
+var countLeds = 0;
+
+//var numFrames = 3;
+var ledsInFrameArray = [];
+var colorsInFrameArray = [];
+var ledFrameCountArray = [];
+var frameArray = [];
 
 function getDatasets() {
   const datasets = []
@@ -75,7 +87,7 @@ function drawChart() {
         let element = this.getElementAtEvent(event);
         if (element.length > 0) {
             var label = element[0]._model.label;
-            console.log(label);
+            //console.log(label);
             drawPrompt(label);
         }
       }
@@ -96,13 +108,14 @@ function updateDatasets(){
 */
 
 function updateDatasets(led, colorString){
-
-  chart.data.datasets[0].backgroundColor[led] = colorString
-  led++;
-  if(led > 10){
-    led = 0;
-  }
+  chart.data.datasets[0].backgroundColor[led] = colorString;
+  ledsInFrameArray[countLeds] = led;
+  colorsInFrameArray[countLeds] = colorString;
   chart.update();
+  countLedsInFrame++;
+  console.log('count leds in frame: ',countLedsInFrame);
+  countLeds++;
+  console.log('count leds total: ',countLeds);
 }
 
 function getLEDLocation(label){
@@ -182,12 +195,16 @@ function drawPrompt(label){
   })
   .then((result) => {
     if (result) {
-      console.log('obtained result', result);
+      //console.log('obtained result', result);
       var colorString = 'rgba(' + result.Red + ', ' + result.Blue + ', ' + result.Green + ', 1)';
-      console.log(colorString);
+      //console.log(colorString);
       var led = getLEDLocation(label);
-      console.log(led);
+      //console.log(led);
+
       updateDatasets(led, colorString);
+
+      //ledArray[frames] = led;
+      //colorStringArray[frames] = colorString;
     } else {
       //TODO: add indicator that you need all values
     }
@@ -196,11 +213,50 @@ function drawPrompt(label){
     console.log('uh-oh', error);
   })
 }
-function startShow(){
-  console.log('Show started! time: ', timeInput, 'step: ', stepInput);
+
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
 }
-var timeInput;
-var stepInput;
+
+function startGlow(){
+
+  timeInc = timeInput / stepInput;
+  //console.log('Show started! Time Inc: ', timeInc);
+  console.log('Number of frames: ', frames); 
+  while(1){
+    for(let i = 0; i < frames; i++){
+      for (let j = 0; j < ledFrameCountArray[i]; j++){
+        chart.data.datasets[0].backgroundColor[ledsInFrameArray[j]] = colorsInFrameArray[j];
+        chart.update();
+        //console.log('Total count of leds is', countLeds);
+        console.log('number of leds in frame array!', ledsInFrameArray[j]);  
+        //console.log('number of colors in frame array', colorsInFrameArray[j]);
+      }
+        //console.log('yep!');  
+        sleep(timeInc);
+        clearLEDs();
+    }
+  }
+}
+
+function nextFrame(){
+  ledFrameCountArray[frames] = countLedsInFrame;
+  countLedsInFrame = 0;
+  frames++;
+  clearLEDs();
+  //console.log('Show started! time: ', timeInput, 'step: ', stepInput);
+}
+function clearLEDs(){
+  for (let i = 0; i < 10; i++){
+    chart.data.datasets[0].backgroundColor[i] = 'rgba(0, 0, 0, 1)'
+  }
+  chart.update();
+}
+
 $(() => {
   drawChart();
   $('#time-input').bind('input propertychange', function() {
