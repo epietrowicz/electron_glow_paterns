@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Activity Monitor</title>
+  <title>Metallica Demo</title>
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -26,26 +26,13 @@
   <div class="container-fluid">
     <canvas class="chart"></canvas>
     <!-- Input row -->
-    <div class="row">
-      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 ">
-        <h3 class="hash-heading">Time</h3>
-        <textarea rows="1" id="time-input" class="form-control text-input" placeholder="Enter time"></textarea>
-      </div>
-      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 ">
-        <h3 class="hash-heading">Step</h3>
-        <textarea rows="1" id="step-input" class="form-control text-input" placeholder="Enter step"></textarea>
-      </div>
-    </div>
+    <h3 class="hash-heading">Speed (ms):</h3>          
+    <textarea rows="1" id="time-input" placeholder="Value"></textarea>
     <br>
-    <br>
-
-
-    <input type="button" id="btnEd" value="Next Frame" onclick="nextFrame()" />
     <input type="button" id="btnEd1" value="Start Pattern" onclick="startGlow()" />
-
-    
+   
+    <div class="center">
+ </div>
   </div>
-
 </body>
-
 </html>

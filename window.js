@@ -3,15 +3,9 @@ var chart = null;
 var timeInput;
 var stepInput;
 var timeInc;
-var frames = 0;
-var countLedsInFrame = 0;
-var countLeds = 0;
-
-//var numFrames = 3;
+var ledCount = 0;
 var ledsInFrameArray = [];
 var colorsInFrameArray = [];
-var ledFrameCountArray = [];
-var frameArray = [];
 
 function getDatasets() {
   const datasets = []
@@ -71,7 +65,7 @@ function drawChart() {
       maintainAspectRatio: true,
       title: {
         display: true,
-        text: 'LED Lighting Configurations',
+        text: 'Metallica LED Demo',
         fontColor: 'rgb(250, 250, 250)',
         fontSize: 16
       },
@@ -109,13 +103,10 @@ function updateDatasets(){
 
 function updateDatasets(led, colorString){
   chart.data.datasets[0].backgroundColor[led] = colorString;
-  ledsInFrameArray[countLeds] = led;
-  colorsInFrameArray[countLeds] = colorString;
+  ledsInFrameArray[ledCount] = led;
+  colorsInFrameArray[ledCount] = colorString;
+  ledCount++;
   chart.update();
-  countLedsInFrame++;
-  console.log('count leds in frame: ',countLedsInFrame);
-  countLeds++;
-  console.log('count leds total: ',countLeds);
 }
 
 function getLEDLocation(label){
@@ -150,12 +141,11 @@ function drawPrompt(label){
   prompt({
     title: label + ' Mix',
     value: 'Single input value',
-    label: 'RGB Intensity',
-    disableInitialLabel: false,
+    disableInitialLabel: true,
     alwaysOnTop: false, //allow the prompt window to stay over the main Window,
     type: 'multi-input',
-    width: 580, // window width
-    height: 350, // window height
+    width: 310, // window width
+    height: 310, // window height
     resizable: true,
     buttonsStyle: {
       texts: {
@@ -196,17 +186,19 @@ function drawPrompt(label){
   .then((result) => {
     if (result) {
       //console.log('obtained result', result);
-      var colorString = 'rgba(' + result.Red + ', ' + result.Blue + ', ' + result.Green + ', 1)';
-      //console.log(colorString);
+      if(!result.Red){
+        result.Red = '0';
+      }
+      if(!result.Blue){
+        result.Blue = '0';
+      }
+      if(!result.Green){
+        result.Green = '0';
+      }
+      var colorString = 'rgba(' + result.Red + ', ' + result.Green + ', ' + result.Blue + ', 1)';
       var led = getLEDLocation(label);
-      //console.log(led);
-
       updateDatasets(led, colorString);
-
-      //ledArray[frames] = led;
-      //colorStringArray[frames] = colorString;
     } else {
-      //TODO: add indicator that you need all values
     }
   })
   .catch((error) => {
@@ -223,33 +215,21 @@ function sleep(milliseconds) {
 }
 
 function startGlow(){
-
-  timeInc = timeInput / stepInput;
-  //console.log('Show started! Time Inc: ', timeInc);
-  console.log('Number of frames: ', frames); 
-  while(1){
-    for(let i = 0; i < frames; i++){
-      for (let j = 0; j < ledFrameCountArray[i]; j++){
-        chart.data.datasets[0].backgroundColor[ledsInFrameArray[j]] = colorsInFrameArray[j];
-        chart.update();
-        //console.log('Total count of leds is', countLeds);
-        console.log('number of leds in frame array!', ledsInFrameArray[j]);  
-        //console.log('number of colors in frame array', colorsInFrameArray[j]);
+  setInterval(()=>{
+    console.log("updating chart....");
+    clearLEDs();
+    for(let i = 0; i < ledsInFrameArray.length; i++){
+      chart.data.datasets[0].backgroundColor[ledsInFrameArray[i]] = colorsInFrameArray[i];
+      chart.update();
+      if(ledsInFrameArray[i] < 9){
+        ledsInFrameArray[i] = ledsInFrameArray[i] + 1;
+      } else {
+        ledsInFrameArray[i] = 0;
       }
-        //console.log('yep!');  
-        sleep(timeInc);
-        clearLEDs();
     }
-  }
+  }, timeInput);
 }
 
-function nextFrame(){
-  ledFrameCountArray[frames] = countLedsInFrame;
-  countLedsInFrame = 0;
-  frames++;
-  clearLEDs();
-  //console.log('Show started! time: ', timeInput, 'step: ', stepInput);
-}
 function clearLEDs(){
   for (let i = 0; i < 10; i++){
     chart.data.datasets[0].backgroundColor[i] = 'rgba(0, 0, 0, 1)'
@@ -261,8 +241,5 @@ $(() => {
   drawChart();
   $('#time-input').bind('input propertychange', function() {
     timeInput = this.value
-  })
-  $('#step-input').bind('input propertychange', function() {
-    stepInput = this.value
   })
 })

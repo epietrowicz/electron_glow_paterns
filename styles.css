@@ -10,3 +10,29 @@ html {
 .container-fluid {
   padding: 25px;
 }
+.center {
+  padding: 10px 0;
+  text-align: center;
+}
+h3 {
+  color: rgb(110, 109, 109);
+}
+textarea {
+  width: 40%;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none;
+}
+input {
+  background-color: rgb(23, 155, 28);
+  width: 40%;
+  border: 2px solid rgb(15, 109, 19);
+  border-radius: 4px;
+  color: rgb(255, 255, 255);
+  padding: 10px 32px;
+  text-decoration: none;
+  margin: 4px 0px;
+  cursor: pointer;
+}
