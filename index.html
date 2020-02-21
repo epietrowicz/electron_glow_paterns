@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Metallica Demo</title>
+  <title>Hidrate Flare</title>
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -26,12 +26,55 @@
   <div class="container-fluid">
     <canvas class="chart"></canvas>
     <!-- Input row -->
-    <h3 class="hash-heading">Step Size (ms):</h3>          
-    <textarea rows="1" id="time-input" placeholder="Value"></textarea>
+    <div class="wrapper">
+
+      <div>
+        <h3 class="hash-heading">Step Size (ms):</h3>
+        <textarea rows="1" id="time-input" placeholder="Value"></textarea>
+        <br>
+        <input type="button" id="btnEd1" value="Start Pattern" onclick="startGlow()" />
+      </div>
+
+      <div>
+      </div>
+
+      <div>
+        <br>
+        <br>
+        <br>
+        <img class="logo_img" border="0" src="static/hidrate+spark+logo.png" width="400" height="60">
+      </div>
+
+      <div>
+      </div>
+
+      <div>
+        <div class="img_wrapper">
+          <br>
+          <br>
+          <br>
+          <a onclick="rainbowPattern()">
+            <img class="color_picker_img" border="0" src="static/rainbow_img.PNG" width="40" height="40">
+          </a>
+          <a onclick="whitePattern()">
+            <img class="color_picker_img" border="0" src="static/white_img.PNG" width="40" height="40">
+          </a>
+          <a onclick="bluePattern()">
+            <img class="color_picker_img" border="0" src="static/blue_img.PNG" width="40" height="40">
+          </a>
+          <a onclick="greenPattern()">
+            <img class="color_picker_img" border="0" src="static/green_img.PNG" width="40" height="40">
+          </a>
+          <a onclick="redPattern()">
+            <img class="color_picker_img" border="0" src="static/red_img.PNG" width="40" height="40">
+          </a>
+          <a onclick="purplePattern()">
+            <img class="color_picker_img" border="0" src="static/purple_img.PNG" width="40" height="40">
+          </a>
+        </div>
+      </div>
+    </div>
     <br>
-    <input type="button" id="btnEd1" value="Start Pattern" onclick="startGlow()" />
-    <div class="center">
- </div>
   </div>
 </body>
 </html>

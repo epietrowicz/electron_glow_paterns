@@ -16,9 +16,10 @@ html {
 }
 h3 {
   color: rgb(110, 109, 109);
+  margin: 6px 0px;
 }
 textarea {
-  width: 40%;
+  width: 100%;
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;
@@ -26,13 +27,36 @@ textarea {
   resize: none;
 }
 input {
-  background-color: rgb(23, 155, 28);
-  width: 40%;
-  border: 2px solid rgb(15, 109, 19);
+  background-color:#4CAF50;
+  width: 100%;
+  border: 2px solid #4CAF50;
   border-radius: 4px;
-  color: rgb(255, 255, 255);
+  color: white;
   padding: 10px 32px;
-  text-decoration: none;
+  font-size: large;
   margin: 4px 0px;
   cursor: pointer;
+}
+.color_picker_img {
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 0px 3px;
+}
+.wrapper{
+  display: grid;
+  grid-template-columns: 30% 5% 30% 5% 30%;
+}
+.img_wrapper{
+  text-align: right;
+}
+.logo_img{
+  margin: 0px 10px;
+  max-width: 100%;
+  height: auto;
+  width: auto;
+}
+.input_block{
+  height: auto;
+  width: auto;
 }
